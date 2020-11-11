@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sdc
+  name: sdc
+  namespace: streamsets
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: sdc
+  template:
+    metadata:
+      labels:
+        app: sdc
+    spec:
+      containers:
+      - image: streamsets/datacollector:3.18.1
+        imagePullPolicy: Always
+        name: sdc
+        ports:
+        - containerPort: 18630
+          name: 18630tcp2
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /etc/sdc/sdc.properties
+          name: sdc-properties
+          subPath: sdc.properties
+        - mountPath: /etc/sdc/sdc-dynamic.properties
+          name: sdc-dynamic-properties
+          subPath: sdc-dynamic.properties
+        - mountPath: /etc/sdc/ldap-login.conf
+          name: sdc-ldap-conf
+          subPath: ldap-login.conf
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: sdc-properties
+        name: sdc-properties
+      - configMap:
+          defaultMode: 420
+          name: sdc-dynamic-properties
+          optional: false
+        name: sdc-dynamic-properties
+      - configMap:
+          defaultMode: 420
+          name: sdc-ldap-login
+          optional: false
+        name: sdc-ldap-conf
