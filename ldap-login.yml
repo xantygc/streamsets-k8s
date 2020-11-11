@@ -1,0 +1,29 @@
+apiVersion: v1
+data:
+  ldap-login.conf: |
+    ldap {
+      com.streamsets.datacollector.http.LdapLoginModule required
+      debug="true"
+      useLdaps="false"
+      useStartTLS="false"
+      contextFactory="com.sun.jndi.ldap.LdapCtxFactory"
+      hostname="ldaphosting.local"
+      port="999"
+      bindDn="CN=ldapsearch,CN=Users,DC=COMPANY,DC=LOCAL"
+      bindPassword="*******"
+      forceBindingLogin="true"
+      userBaseDn="ou=AXPO,dc=COMPANY,dc=LOCAL"
+      userIdAttribute="sAMAccountName"
+      userPasswordAttribute=""
+      userObjectClass="person"
+      userFilter="sAMAccountName={user}"
+      roleBaseDn="ou=AXPO,dc=COMPANY,dc=LOCAL"
+      roleNameAttribute="cn"
+      roleMemberAttribute="member"
+      roleObjectClass="group"
+      roleFilter="member={dn}";
+    };
+kind: ConfigMap
+metadata:
+  name: sdc-ldap-login
+  namespace: streamsets
