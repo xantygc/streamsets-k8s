@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  sdc-dynamic.properties: |-
+    ## Global properties
+    ## env: [Pre]
+    runtime.conf_kafka=kafka-headless.kafka.svc.cluster.local:9092
+    runtime.conf_zookeeper=zookeeper-cluster-headless.zookeeper.svc.cluster.local:2181
+    runtime.conf_schemaRegistry=http://schema-registry.kafka.svc.cluster.local:8081
+
+
+kind: ConfigMap
+metadata:
+  name: sdc-dynamic-properties
+  namespace: streamsets
