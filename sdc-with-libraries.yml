@@ -37,7 +37,7 @@ spec:
           subPath: ldap-login.conf
         - name: sdc-stage-libs
           mountPath: /opt/streamsets-datacollector-3.18.1/streamsets-libs
-          readOnly: "true"
+          readOnly: true
       volumes:
       - name: sdc-stage-libs
         persistentVolumeClaim:
